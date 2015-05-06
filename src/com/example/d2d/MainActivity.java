@@ -59,13 +59,13 @@ public class MainActivity extends ActionBarActivity {
 	//Send Function
 	void send(){
 		//Jump to Send Activity
-		Intent i = new Intent(this, Send.class);
+		Intent i = new Intent(this, Client.class);
         startActivity(i);}
 	
 	//Recieve Function
 	void receive(){
 		//Jump to Receive Activity
-		Intent i = new Intent(this, Receive.class);
+		Intent i = new Intent(this, Server.class);
         startActivity(i);}
 
 	@Override

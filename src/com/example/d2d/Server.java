@@ -26,7 +26,7 @@ import com.whitebyte.wifihotspotutils.FinishScanListener;
 import com.whitebyte.wifihotspotutils.WifiApManager;
 import com.example.d2d.WifiApControl;
 
-public class Receive extends ActionBarActivity {
+public class Server extends ActionBarActivity {
 
 	private WifiConfiguration apconfig;
 	private String ssid= "d2dcommunication";
@@ -40,7 +40,7 @@ public class Receive extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_receive);
+		setContentView(R.layout.activity_server);
 		
 		clientsDisp = (TextView) findViewById(R.id.textView3);
 		wifiApManager = new WifiApManager(this);

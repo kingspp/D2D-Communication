@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Send"
-            android:label="@string/title_activity_send" >
+            android:name=".Client"
+            android:label="Client" >
         </activity>
         <activity
-            android:name=".Receive"
-            android:label="@string/title_activity_receive" >
+            android:name=".Server"
+            android:label="Server" >
         </activity>
         <activity
             android:name=".About"

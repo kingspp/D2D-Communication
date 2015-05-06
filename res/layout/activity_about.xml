@@ -5,14 +5,24 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text=" v1.0.1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#920000"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
-        android:text="Device 2 Device 
-    Communication"
+        android:layout_marginTop="50dp"
+        android:text="Device 2 Device\nCommunication"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="25sp" />
 
@@ -24,16 +34,5 @@
         android:layout_centerHorizontal="true"
         android:text="©kingspp 2015"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text=" v1.0.1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#920000"
-        android:textSize="20sp" />
 
 </RelativeLayout>

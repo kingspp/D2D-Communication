@@ -26,7 +26,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Send extends ActionBarActivity {
+public class Client extends ActionBarActivity {
 
 	private String ssid= "d2dcommunication";
 	private String key= "raksytk1234";
@@ -39,7 +39,7 @@ public class Send extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_send);
+		setContentView(R.layout.activity_client);
 
 		ssidName = (TextView) findViewById(R.id.textView3);
 
@@ -85,9 +85,9 @@ public class Send extends ActionBarActivity {
 		WifiInfo myWifiInfo = myWifiManager.getConnectionInfo();
 
 		if (myNetworkInfo.isConnected())
-			ssidName.setText(myWifiInfo.getSSID().toString());
+			ssidName.setText("SSID: "+myWifiInfo.getSSID().toString());
 		else
-			ssidName.setText("Not Connected");
+			ssidName.setText("SSID: Not Connected");
 
 	}
 

@@ -21,7 +21,8 @@
         android:background="@drawable/custom_btn_genoa"
         android:hapticFeedbackEnabled="true"
         android:soundEffectsEnabled="true"
-        android:text="Client" />
+        android:text="Client"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/button2"
