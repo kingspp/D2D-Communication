@@ -22,6 +22,7 @@ public class WifiApControl {
     private static Method isWifiApEnabled;
     private static Method setWifiApEnabled;
     private static Method getWifiApConfiguration;
+    //private final WifiManager mWifiManager;
  
     public static final String WIFI_AP_STATE_CHANGED_ACTION = "android.net.wifi.WIFI_AP_STATE_CHANGED";
  
@@ -58,7 +59,7 @@ public class WifiApControl {
  
     private WifiManager mgr;
  
-    private WifiApControl(WifiManager mgr) {
+    WifiApControl(WifiManager mgr) {
         this.mgr = mgr;
     }
  
@@ -93,6 +94,20 @@ public class WifiApControl {
             Log.v("BatPhone", e.toString(), e); // shouldn't happen
             return null;
         }
+    }
+    
+    /**
+     * Sets the Wi-Fi AP Configuration.
+     * @return {@code true} if the operation succeeded, {@code false} otherwise
+     */
+    public boolean setWifiApConfiguration(WifiConfiguration wifiConfig) {
+      try {
+        Method method = mgr.getClass().getMethod("setWifiApConfiguration", WifiConfiguration.class);
+        return (Boolean) method.invoke(mgr, wifiConfig);
+      } catch (Exception e) {
+        Log.e(this.getClass().toString(), "", e);
+        return false;
+      }
     }
  
     public boolean setWifiApEnabled(WifiConfiguration config, boolean enabled) {

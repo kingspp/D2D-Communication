@@ -1901,7 +1901,11 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020038;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020039;
         public static final int abc_textfield_search_material=0x7f02003a;
-        public static final int ic_launcher=0x7f02003b;
+        public static final int directory_icon=0x7f02003b;
+        public static final int directory_up=0x7f02003c;
+        public static final int file_icon=0x7f02003d;
+        public static final int ic_launcher=0x7f02003e;
+        public static final int icon=0x7f02003f;
     }
     public static final class id {
         public static final int action_bar=0x7f090040;
@@ -2048,10 +2052,11 @@ containing a value of this type.
         public static final int activity_main=0x7f030019;
         public static final int activity_receive=0x7f03001a;
         public static final int activity_send=0x7f03001b;
-        public static final int select_dialog_item_material=0x7f03001c;
-        public static final int select_dialog_multichoice_material=0x7f03001d;
-        public static final int select_dialog_singlechoice_material=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int main=0x7f03001c;
+        public static final int select_dialog_item_material=0x7f03001d;
+        public static final int select_dialog_multichoice_material=0x7f03001e;
+        public static final int select_dialog_singlechoice_material=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
