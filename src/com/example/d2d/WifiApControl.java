@@ -5,10 +5,19 @@
 
 package com.example.d2d;
  
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
  
+
+
+import java.net.InetAddress;
+import java.util.ArrayList;
+
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.util.Log;
  
 /**
@@ -118,4 +127,6 @@ public class WifiApControl {
             return false;
         }
     }
+    
+   
 }

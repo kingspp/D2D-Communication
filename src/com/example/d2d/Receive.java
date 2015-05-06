@@ -9,6 +9,7 @@
 package com.example.d2d;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
@@ -18,7 +19,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.whitebyte.wifihotspotutils.ClientScanResult;
+import com.whitebyte.wifihotspotutils.FinishScanListener;
+import com.whitebyte.wifihotspotutils.WifiApManager;
 import com.example.d2d.WifiApControl;
 
 public class Receive extends ActionBarActivity {
@@ -26,12 +31,19 @@ public class Receive extends ActionBarActivity {
 	private WifiConfiguration apconfig;
 	private String ssid= "d2dcommunication";
 	private String key= "raksytk";
+	WifiApManager wifiApManager; 
+	TextView clientsDisp;
+	private int clientNo=0;
+	private String temp="";
 	
 	WifiApControl apControl;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_receive);
+		
+		clientsDisp = (TextView) findViewById(R.id.textView3);
+		wifiApManager = new WifiApManager(this);
 		
 		//Declare WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
@@ -76,8 +88,42 @@ public class Receive extends ActionBarActivity {
 		} catch (Exception e) {
 		    Log.e(this.getClass().toString(), "", e);
 		}
+		scan();
+		new Thread(new Task()).start();
 		
 		
+		
+	}
+	
+	class Task implements Runnable {
+		@Override
+		public void run() {
+			for (int i = 0; i <= 300; i++) {				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				scan();
+
+			}
+		}
+
+	}
+	
+	private void scan() {
+		wifiApManager.getClientList(false, new FinishScanListener() {
+			@Override
+			public void onFinishScan(final ArrayList<ClientScanResult> clients) {		
+				clientsDisp.setText(" ");
+				clientNo=0;
+				for (ClientScanResult clientScanResult : clients) {					
+					clientsDisp.append((++clientNo)+": ");
+					clientsDisp.append("IpAddr: " + clientScanResult.getIpAddr() + "\n");					
+					clientsDisp.append("HWAddr: " + clientScanResult.getHWAddr() + "\n");					
+				}
+			}
+		});
 	}
 	
 	void wifiapconfig(){

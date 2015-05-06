@@ -57,6 +57,7 @@ public class Send extends ActionBarActivity {
 		DisplayWifiState();
 		this.registerReceiver(this.myWifiReceiver,
 		         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+		
 		/*
 		ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mWifi = connManager
