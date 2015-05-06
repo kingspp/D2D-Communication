@@ -9,6 +9,7 @@ package com.example.d2d;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.LightingColorFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
-        
+    
         //Declare Buttons
 	private Button sendBtn, recBtn;
 	//Check for WiFi
@@ -30,7 +31,8 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		//Assign the button
 		sendBtn = (Button) findViewById(R.id.button1);
-		recBtn = (Button) findViewById(R.id.button2);
+		recBtn =  (Button) findViewById(R.id.button2);
+		
                 
                 //OnClick listener for Send Button
 		sendBtn.setOnClickListener(new OnClickListener() {
@@ -81,6 +83,14 @@ public class MainActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+			
+		if (id == R.id.action_about) {
+			Intent i = new Intent(this, About.class);
+	        startActivity(i);
+		
+				return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
+		
 }

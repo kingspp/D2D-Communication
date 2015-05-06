@@ -11,28 +11,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.d2d.MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Device to Device Communication" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_centerVertical="true"
-        android:text="Receive" />
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
         android:layout_alignLeft="@+id/button2"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_marginBottom="20dp"
-        android:text="SEND" />
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/custom_btn_genoa"
+        android:hapticFeedbackEnabled="true"
+        android:soundEffectsEnabled="true"
+        android:text="Client" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@drawable/custom_btn_orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:background="@drawable/custom_btn_orange"
+        android:hapticFeedbackEnabled="true"
+        android:soundEffectsEnabled="true"
+        android:text="Server" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Device to Device Communication"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

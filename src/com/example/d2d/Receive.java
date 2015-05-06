@@ -30,11 +30,11 @@ public class Receive extends ActionBarActivity {
 
 	private WifiConfiguration apconfig;
 	private String ssid= "d2dcommunication";
-	private String key= "raksytk";
+	private String key= "raksytk1234";
 	WifiApManager wifiApManager; 
 	TextView clientsDisp;
 	private int clientNo=0;
-	private String temp="";
+	
 	
 	WifiApControl apControl;
 	@Override
@@ -51,27 +51,15 @@ public class Receive extends ActionBarActivity {
 		//Check for WiFi, if On turn off
 		if(wifiManager.isWifiEnabled())
 			wifiManager.setWifiEnabled(false);
-		//Turn On HotSpot
-		/*
-		boolean ap=false;
-		apControl= new WifiApControl(wifiManager);		
-		apControl.setWifiApConfiguration(apconfig);
-		turnOnOffHotspot(this, true);
-		wifiapconfig();
 		
-		if(ap==true)
-			System.out.println("Hello");
-		else
-			System.out.println("Damar");
-		*/
 		WifiConfiguration netConfig = new WifiConfiguration();
 
-		netConfig.SSID = "d2dCommunication";
-		netConfig.preSharedKey="raksytk1234";
+		netConfig.SSID = ssid;
+		//netConfig.preSharedKey=key;
 		netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 
 		try{
 		    Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);

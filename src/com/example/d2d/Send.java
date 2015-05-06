@@ -28,8 +28,8 @@ import android.widget.TextView;
 
 public class Send extends ActionBarActivity {
 
-	String ssid = "Dlink";
-	String key = "9738134205";
+	private String ssid= "d2dcommunication";
+	private String key= "raksytk1234";
 
 	private TextView ssidName;
 
@@ -49,34 +49,17 @@ public class Send extends ActionBarActivity {
 		// Turn Off HotSpot
 		turnOnOffHotspot(this, false);
 
+		wifiAccess(this);
 		// Turn on WiFi if Off.
 		if (!wifiManager.isWifiEnabled())
 			wifiManager.setWifiEnabled(true);
 
-		wifiAccess(this);
+		//wifiAccess(this);
 		DisplayWifiState();
 		this.registerReceiver(this.myWifiReceiver,
 		         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 		
-		/*
-		ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo mWifi = connManager
-				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-		this.registerReceiver(this.myWifiReceiver, new IntentFilter(
-				ConnectivityManager.CONNECTIVITY_ACTION));
-		// ssidName.setText("Hello");
-
-		
-		  int connected=0;
-		  
-		  while(connected==0){
-		  
-		  
-		  if (mWifi.isConnected()) {
-		  ssidName.setText("Connected to: "+wifiManager
-		  .getConnectionInfo().getSSID().toString()); connected=1; } }
-		 */
+	
 
 	}
 
@@ -148,7 +131,9 @@ public class Send extends ActionBarActivity {
 
 		WifiConfiguration wifiConfig = new WifiConfiguration();
 		wifiConfig.SSID = String.format("\"%s\"", ssid);
-		wifiConfig.preSharedKey = String.format("\"%s\"", key);
+		wifiConfig.priority=3; 
+		//wifiConfig.preSharedKey = String.format("\"%s\"", key);
+		//wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 
 		WifiManager wifiManager = (WifiManager) context
 				.getSystemService(Context.WIFI_SERVICE);
