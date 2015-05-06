@@ -31,6 +31,8 @@ public class Server extends ActionBarActivity {
 	private WifiConfiguration apconfig;
 	private String ssid= "d2dcommunication";
 	private String key= "raksytk1234";
+	TextView wifiSSID;
+	TextView wifiAuth;
 	WifiApManager wifiApManager; 
 	TextView clientsDisp;
 	private int clientNo=0;
@@ -47,6 +49,11 @@ public class Server extends ActionBarActivity {
 		
 		//Declare WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+		wifiSSID= (TextView)findViewById(R.id.TextView02);
+		wifiAuth= (TextView)findViewById(R.id.TextView03);
+		wifiSSID.setText(ssid);
+		
+		
 		
 		//Check for WiFi, if On turn off
 		if(wifiManager.isWifiEnabled())
@@ -60,6 +67,7 @@ public class Server extends ActionBarActivity {
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
 		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+		wifiAuth.setText("Authentication Type: None");
 
 		try{
 		    Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
