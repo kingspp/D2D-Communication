@@ -37,7 +37,20 @@
         android:layout_alignLeft="@+id/TextView01"
         android:layout_below="@+id/TextView01"
         android:layout_marginTop="114dp"
-        android:text="SSID: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Scanning for Server "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toRightOf="@+id/TextView01"
+        android:maxHeight="25dp"
+        android:maxWidth="25dp"
+        android:minHeight="25dip"
+        android:minWidth="25dip"
+        android:background="@drawable/progress" />
 
 </RelativeLayout>

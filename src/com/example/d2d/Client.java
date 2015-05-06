@@ -23,7 +23,9 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Client extends ActionBarActivity {
@@ -32,6 +34,7 @@ public class Client extends ActionBarActivity {
 	private String key= "raksytk1234";
 
 	private TextView ssidName;
+	private ProgressBar spinner;
 
 	// Declare Variables
 	private boolean wifiAP = false, wifi = false;
@@ -42,6 +45,7 @@ public class Client extends ActionBarActivity {
 		setContentView(R.layout.activity_client);
 
 		ssidName = (TextView) findViewById(R.id.textView3);
+		spinner = (ProgressBar)findViewById(R.id.progressBar1);
 
 		// Declare variable for WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this
@@ -53,6 +57,7 @@ public class Client extends ActionBarActivity {
 		// Turn on WiFi if Off.
 		if (!wifiManager.isWifiEnabled())
 			wifiManager.setWifiEnabled(true);
+		wifiAccess(this);
 
 		//wifiAccess(this);
 		DisplayWifiState();
@@ -84,10 +89,15 @@ public class Client extends ActionBarActivity {
 		WifiManager myWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		WifiInfo myWifiInfo = myWifiManager.getConnectionInfo();
 
-		if (myNetworkInfo.isConnected())
+		if (myNetworkInfo.isConnected()){
+			spinner.setVisibility(View.GONE);
 			ssidName.setText("SSID: "+myWifiInfo.getSSID().toString());
-		else
-			ssidName.setText("SSID: Not Connected");
+			
+		}
+		else{
+			ssidName.setText("Scanning for Server");
+			spinner.setVisibility(View.VISIBLE);			
+		}
 
 	}
 

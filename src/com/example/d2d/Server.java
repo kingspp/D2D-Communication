@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.whitebyte.wifihotspotutils.ClientScanResult;
@@ -36,6 +38,7 @@ public class Server extends ActionBarActivity {
 	WifiApManager wifiApManager; 
 	TextView clientsDisp;
 	private int clientNo=0;
+	private ProgressBar spinner;
 	
 	
 	WifiApControl apControl;
@@ -49,9 +52,10 @@ public class Server extends ActionBarActivity {
 		
 		//Declare WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+		spinner = (ProgressBar)findViewById(R.id.progressBar1);
 		wifiSSID= (TextView)findViewById(R.id.TextView02);
 		wifiAuth= (TextView)findViewById(R.id.TextView03);
-		wifiSSID.setText(ssid);
+		wifiSSID.setText("SSID: "+ssid);
 		
 		
 		
@@ -108,6 +112,7 @@ public class Server extends ActionBarActivity {
 	}
 	
 	private void scan() {
+		 spinner.setVisibility(View.VISIBLE);
 		wifiApManager.getClientList(false, new FinishScanListener() {
 			@Override
 			public void onFinishScan(final ArrayList<ClientScanResult> clients) {		
