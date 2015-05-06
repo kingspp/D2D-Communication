@@ -1987,8 +1987,8 @@ containing a value of this type.
         public static final int tabMode=0x7f09000c;
         public static final int textSpacerNoButtons=0x7f090033;
         public static final int textView1=0x7f09004f;
-        public static final int textView2=0x7f090050;
-        public static final int textView3=0x7f090051;
+        public static final int textView2=0x7f090051;
+        public static final int textView3=0x7f090050;
         public static final int title=0x7f09002c;
         public static final int title_template=0x7f09002f;
         public static final int topPanel=0x7f09002e;

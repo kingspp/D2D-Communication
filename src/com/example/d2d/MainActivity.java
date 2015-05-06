@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,5 +93,45 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	// Turn on/off HotSpot Function
+		public static void turnOnOffHotspot(Context context, boolean isTurnToOn) {
+			WifiManager wifiManager = (WifiManager) context
+					.getSystemService(Context.WIFI_SERVICE);
+			WifiApControl apControl = WifiApControl.getApControl(wifiManager);
+			if (apControl != null) {
+
+				// TURN OFF YOUR WIFI BEFORE ENABLE HOTSPOT
+				// if (isWifiOn(context) && isTurnToOn) {
+				// turnOnOffWifi(context, false);
+				// }
+
+				apControl.setWifiApEnabled(apControl.getWifiApConfiguration(),
+						isTurnToOn);
+			}
+		}
+	
+	//Exit function
+		private Boolean exit = false;
+		@Override
+		    public void onBackPressed() {
+		        if (exit) {
+		            finish(); // finish activity
+		            final WifiManager wifiManager = (WifiManager) this
+		    				.getSystemService(Context.WIFI_SERVICE);
+		            wifiManager.setWifiEnabled(true);
+		            turnOnOffHotspot(this, false);
+		            
+		        } else {
+		            Toast.makeText(this, "Press Back again to Exit.",
+		                    Toast.LENGTH_SHORT).show();
+		            exit = true;
+		            new Handler().postDelayed(new Runnable() {
+		                @Override
+		                public void run() {
+		                    exit = false;
+		                }
+		            }, 3 * 1000);
+		        }
+		    }
 		
 }

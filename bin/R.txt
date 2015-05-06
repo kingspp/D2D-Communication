@@ -487,8 +487,8 @@ int id submit_area 0x7f09004b
 int id tabMode 0x7f09000c
 int id textSpacerNoButtons 0x7f090033
 int id textView1 0x7f09004f
-int id textView2 0x7f090050
-int id textView3 0x7f090051
+int id textView2 0x7f090051
+int id textView3 0x7f090050
 int id title 0x7f09002c
 int id title_template 0x7f09002f
 int id topPanel 0x7f09002e
