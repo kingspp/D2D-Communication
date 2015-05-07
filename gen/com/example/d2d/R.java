@@ -1914,7 +1914,7 @@ containing a value of this type.
         public static final int TextView01=0x7f090052;
         public static final int TextView02=0x7f090056;
         public static final int TextView03=0x7f090057;
-        public static final int action_about=0x7f09005a;
+        public static final int action_about=0x7f09005b;
         public static final int action_bar=0x7f090040;
         public static final int action_bar_activity_content=0x7f090003;
         public static final int action_bar_container=0x7f09003f;
@@ -1928,7 +1928,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09003d;
         public static final int action_mode_bar_stub=0x7f09003c;
         public static final int action_mode_close_button=0x7f090025;
-        public static final int action_settings=0x7f090059;
+        public static final int action_settings=0x7f09005a;
         public static final int activity_chooser_view_content=0x7f090026;
         public static final int alertTitle=0x7f090030;
         public static final int always=0x7f090019;
@@ -1969,6 +1969,7 @@ containing a value of this type.
         public static final int radio=0x7f09003a;
         public static final int screen=0x7f090015;
         public static final int scrollView=0x7f090032;
+        public static final int scrollView1=0x7f090058;
         public static final int search_badge=0x7f090044;
         public static final int search_bar=0x7f090043;
         public static final int search_button=0x7f090045;
@@ -1994,7 +1995,7 @@ containing a value of this type.
         public static final int textView1=0x7f090050;
         public static final int textView2=0x7f09004f;
         public static final int textView3=0x7f090051;
-        public static final int textView4=0x7f090058;
+        public static final int textView4=0x7f090059;
         public static final int title=0x7f09002c;
         public static final int title_template=0x7f09002f;
         public static final int topPanel=0x7f09002e;

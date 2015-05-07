@@ -42,7 +42,7 @@ public class Server extends ActionBarActivity {
 	TextView clientsDisp;
 	private int clientNo = 0;
 	private ProgressBar spinner;
-	private int scanSec = 5;
+	private int scanSec = 90;
 	private Button scanBtn;
 
 	WifiApControl apControl;
@@ -124,7 +124,7 @@ public class Server extends ActionBarActivity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < scanSec; i++) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
