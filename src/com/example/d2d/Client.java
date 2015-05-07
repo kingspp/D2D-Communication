@@ -89,7 +89,7 @@ public class Client extends ActionBarActivity {
 
 		if (myNetworkInfo.isConnected()) {
 			spinner.setVisibility(View.GONE);
-			ssidName.setText("SSID: " + myWifiInfo.getSSID().toString());
+			ssidName.setText("SSID: " + myWifiInfo.getSSID().toString()+"\nIP:        "+intToIP(myWifiInfo.getIpAddress()));
 
 		} else {
 			ssidName.setText("Scanning for Server");
@@ -97,6 +97,13 @@ public class Client extends ActionBarActivity {
 		}
 
 	}
+	
+	public String intToIP(int i) {
+
+
+        return (( i & 0xFF)+ "."+((i >> 8 ) & 0xFF)+
+                           "."+((i >> 16 ) & 0xFF)+"."+((i >> 24 ) & 0xFF));
+ }
 
 	// Turn on/off HotSpot Function
 	public static void turnOnOffHotspot(Context context, boolean isTurnToOn) {
