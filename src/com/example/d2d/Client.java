@@ -30,8 +30,8 @@ import android.widget.TextView;
 
 public class Client extends ActionBarActivity {
 
-	private String ssid= "d2dcommunication";
-	private String key= "raksytk1234";
+	private String ssid = "d2dcommunication";
+	private String key = "raksytk1234";
 
 	private TextView ssidName;
 	private ProgressBar spinner;
@@ -45,7 +45,7 @@ public class Client extends ActionBarActivity {
 		setContentView(R.layout.activity_client);
 
 		ssidName = (TextView) findViewById(R.id.textView3);
-		spinner = (ProgressBar)findViewById(R.id.progressBar1);
+		spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
 		// Declare variable for WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this
@@ -59,12 +59,10 @@ public class Client extends ActionBarActivity {
 			wifiManager.setWifiEnabled(true);
 		wifiAccess(this);
 
-		//wifiAccess(this);
+		// wifiAccess(this);
 		DisplayWifiState();
-		this.registerReceiver(this.myWifiReceiver,
-		         new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-		
-	
+		this.registerReceiver(this.myWifiReceiver, new IntentFilter(
+				ConnectivityManager.CONNECTIVITY_ACTION));
 
 	}
 
@@ -89,14 +87,13 @@ public class Client extends ActionBarActivity {
 		WifiManager myWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		WifiInfo myWifiInfo = myWifiManager.getConnectionInfo();
 
-		if (myNetworkInfo.isConnected()){
+		if (myNetworkInfo.isConnected()) {
 			spinner.setVisibility(View.GONE);
-			ssidName.setText("SSID: "+myWifiInfo.getSSID().toString());
-			
-		}
-		else{
+			ssidName.setText("SSID: " + myWifiInfo.getSSID().toString());
+
+		} else {
 			ssidName.setText("Scanning for Server");
-			spinner.setVisibility(View.VISIBLE);			
+			spinner.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -141,9 +138,9 @@ public class Client extends ActionBarActivity {
 
 		WifiConfiguration wifiConfig = new WifiConfiguration();
 		wifiConfig.SSID = String.format("\"%s\"", ssid);
-		wifiConfig.priority=3; 
-		//wifiConfig.preSharedKey = String.format("\"%s\"", key);
-		//wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+		wifiConfig.priority = 3;
+		// wifiConfig.preSharedKey = String.format("\"%s\"", key);
+		// wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 
 		WifiManager wifiManager = (WifiManager) context
 				.getSystemService(Context.WIFI_SERVICE);
