@@ -83,4 +83,22 @@
         android:minHeight="20dp"
         android:minWidth="20dp" />
 
+    <Button
+        android:id="@+id/button1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+     android:layout_alignTop="@+id/textView1"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="Scan" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_toRightOf="@+id/textView3"
+        android:text="Clients " />
+
 </RelativeLayout>

@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -34,11 +35,14 @@ public class Server extends ActionBarActivity {
 	private String ssid= "d2dcommunication";
 	private String key= "raksytk1234";
 	TextView wifiSSID;
+	TextView Status;
 	TextView wifiAuth;
 	WifiApManager wifiApManager; 
 	TextView clientsDisp;
 	private int clientNo=0;
 	private ProgressBar spinner;
+	private int scanSec = 90;
+	private Button scanBtn;
 	
 	
 	WifiApControl apControl;
@@ -47,14 +51,16 @@ public class Server extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_server);
 		
-		clientsDisp = (TextView) findViewById(R.id.textView3);
+		clientsDisp = (TextView) findViewById(R.id.textView4);
 		wifiApManager = new WifiApManager(this);
 		
 		//Declare WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
 		spinner = (ProgressBar)findViewById(R.id.progressBar1);
+		scanBtn = (Button) findViewById(R.id.button1);
 		wifiSSID= (TextView)findViewById(R.id.TextView02);
 		wifiAuth= (TextView)findViewById(R.id.TextView03);
+		Status= (TextView)findViewById(R.id.textView1);
 		wifiSSID.setText("SSID: "+ssid);
 		
 		
@@ -72,6 +78,16 @@ public class Server extends ActionBarActivity {
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
 		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 		wifiAuth.setText("Authentication Type: None");
+		
+		scanBtn.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	//new Thread(new Task()).start();
+		    	CreateThread();
+		    	findViewById(R.id.progressBar1).setVisibility(View.GONE);
+                findViewById(R.id.button1).setVisibility(View.VISIBLE);
+		    }
+		});
 
 		try{
 		    Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
@@ -89,30 +105,56 @@ public class Server extends ActionBarActivity {
 		    Log.e(this.getClass().toString(), "", e);
 		}
 		scan();
-		new Thread(new Task()).start();
+		//new Thread(new Task()).start();
+		Status.setText("Forming Cluster . .");
+		CreateThread();
+		//findViewById(R.id.progressBar1).setVisibility(View.GONE);
+        //findViewById(R.id.button1).setVisibility(View.VISIBLE);
 		
 		
 		
 	}
 	
-	class Task implements Runnable {
-		@Override
-		public void run() {
-			for (int i = 0; i <= 300; i++) {				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				scan();
+	
+	private void CreateThread() {
+		  final Thread t = new Thread() {
+		    public void run() {
+		      for(int i = 0; i < scanSec; i++)
+		      {
+		        try {
+		          Thread.sleep(1000);
+		        } catch (Exception e) {
+		          Log.v("Error: ", e.toString());
+		        }
+		        scan();
+		      }
+		      
+		      runOnUiThread(new Runnable() {
 
-			}
+		            @Override
+		            public void run() {
+		            	findViewById(R.id.progressBar1).setVisibility(View.GONE);
+		            	setVisible();
+		            }
+		        });
+		    
+		    }
+		  };
+		  t.start();
 		}
+	
+	
+	
 
+	
+	
+	public void setVisible(){
+		Status.setText("Clients in Cluster:");
 	}
 	
 	private void scan() {
 		 spinner.setVisibility(View.VISIBLE);
+		 scanBtn.setVisibility(View.GONE);
 		wifiApManager.getClientList(false, new FinishScanListener() {
 			@Override
 			public void onFinishScan(final ArrayList<ClientScanResult> clients) {		
@@ -125,6 +167,7 @@ public class Server extends ActionBarActivity {
 				}
 			}
 		});
+		
 	}
 	
 	void wifiapconfig(){
