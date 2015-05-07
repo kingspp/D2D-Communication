@@ -2069,9 +2069,9 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int about=0x7f0c0000;
-        public static final int main=0x7f0c0001;
-        public static final int receive=0x7f0c0002;
-        public static final int send=0x7f0c0003;
+        public static final int client=0x7f0c0001;
+        public static final int main=0x7f0c0002;
+        public static final int server=0x7f0c0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
