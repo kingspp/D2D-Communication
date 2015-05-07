@@ -80,13 +80,13 @@ public class Server extends ActionBarActivity {
 		WifiConfiguration netConfig = new WifiConfiguration();
 
 		netConfig.SSID = ssid;
-		// netConfig.preSharedKey=key;
+		netConfig.preSharedKey=key;
 		netConfig.allowedAuthAlgorithms
 				.set(WifiConfiguration.AuthAlgorithm.OPEN);
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 		netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-		wifiAuth.setText("Authentication Type: None");
+		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+		wifiAuth.setText("Authentication Type: WPA_PSK");
 
 		try {
 			Method setWifiApMethod = wifiManager.getClass().getMethod(

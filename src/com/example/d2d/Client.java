@@ -139,11 +139,10 @@ public class Client extends ActionBarActivity {
 	public void wifiAccess(Context context) {
 
 		WifiConfiguration wifiConfig = new WifiConfiguration();
-		wifiConfig.SSID = String.format("\"%s\"", ssid);
 		wifiConfig.priority = 3;
-		// wifiConfig.preSharedKey = String.format("\"%s\"", key);
-		// wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-
+		wifiConfig.SSID = String.format("\"%s\"", ssid);		
+		wifiConfig.preSharedKey = String.format("\"%s\"", key);
+		wifiConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 		WifiManager wifiManager = (WifiManager) context
 				.getSystemService(Context.WIFI_SERVICE);
 		// remember id
