@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,7 +42,7 @@ public class Server extends ActionBarActivity {
 	TextView clientsDisp;
 	private int clientNo=0;
 	private ProgressBar spinner;
-	private int scanSec = 90;
+	private int scanSec = 5;
 	private Button scanBtn;
 	
 	
@@ -57,7 +58,17 @@ public class Server extends ActionBarActivity {
 		//Declare WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
 		spinner = (ProgressBar)findViewById(R.id.progressBar1);
+		
 		scanBtn = (Button) findViewById(R.id.button1);
+		scanBtn.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {	    
+		    	new LongOperation().execute("");	    	
+		    }
+		});
+		
+		
+		
 		wifiSSID= (TextView)findViewById(R.id.TextView02);
 		wifiAuth= (TextView)findViewById(R.id.TextView03);
 		Status= (TextView)findViewById(R.id.textView1);
@@ -79,15 +90,7 @@ public class Server extends ActionBarActivity {
 		netConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 		wifiAuth.setText("Authentication Type: None");
 		
-		scanBtn.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-		    	//new Thread(new Task()).start();
-		    	CreateThread();
-		    	findViewById(R.id.progressBar1).setVisibility(View.GONE);
-                findViewById(R.id.button1).setVisibility(View.VISIBLE);
-		    }
-		});
+		
 
 		try{
 		    Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
@@ -105,18 +108,17 @@ public class Server extends ActionBarActivity {
 		    Log.e(this.getClass().toString(), "", e);
 		}
 		scan();
+		
 		//new Thread(new Task()).start();
+		spinner.setVisibility(View.VISIBLE);
 		Status.setText("Forming Cluster . .");
-		CreateThread();
-		//findViewById(R.id.progressBar1).setVisibility(View.GONE);
-        //findViewById(R.id.button1).setVisibility(View.VISIBLE);
-		
-		
+		new LongOperation().execute("");
 		
 	}
 	
-	
+	/*
 	private void CreateThread() {
+		
 		  final Thread t = new Thread() {
 		    public void run() {
 		      for(int i = 0; i < scanSec; i++)
@@ -129,19 +131,66 @@ public class Server extends ActionBarActivity {
 		        scan();
 		      }
 		      
+		      
 		      runOnUiThread(new Runnable() {
 
 		            @Override
 		            public void run() {
-		            	findViewById(R.id.progressBar1).setVisibility(View.GONE);
+		            	
+		            	findViewById(R.id.progressBar1).setVisibility(View.INVISIBLE);
+		            	findViewById(R.id.button1).setVisibility(View.VISIBLE);
 		            	setVisible();
+		            	
 		            }
 		        });
+		      
+		      
+		      scanBtn.getHandler().post(new Runnable() {
+		    	    public void run() {
+		    	        scanBtn.setVisibility(View.VISIBLE);
+		    	    }
+		    	});
 		    
 		    }
 		  };
 		  t.start();
+		  //findViewById(R.id.progressBar1).setVisibility(View.INVISIBLE);
+	      //findViewById(R.id.button1).setVisibility(View.VISIBLE);
 		}
+	*/
+	
+	private class LongOperation extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            for (int i = 0; i < 5; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
+                scan();
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+           scanBtn.setVisibility(View.VISIBLE);
+           spinner.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onPreExecute() {
+        	 scanBtn.setVisibility(View.GONE);
+             spinner.setVisibility(View.VISIBLE);
+             clientsDisp.setText("");
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    
+	}
 	
 	
 	
@@ -153,18 +202,20 @@ public class Server extends ActionBarActivity {
 	}
 	
 	private void scan() {
-		 spinner.setVisibility(View.VISIBLE);
-		 scanBtn.setVisibility(View.GONE);
-		wifiApManager.getClientList(false, new FinishScanListener() {
+		//clientsDisp.setText(" ");		
+		wifiApManager.getClientList(true, new FinishScanListener() {
 			@Override
-			public void onFinishScan(final ArrayList<ClientScanResult> clients) {		
-				clientsDisp.setText(" ");
+			public void onFinishScan(final ArrayList<ClientScanResult> clients) {	
+				clientsDisp.setText("");
 				clientNo=0;
 				for (ClientScanResult clientScanResult : clients) {					
 					clientsDisp.append((++clientNo)+": ");
 					clientsDisp.append("IpAddr: " + clientScanResult.getIpAddr() + "\n");					
 					clientsDisp.append("HWAddr: " + clientScanResult.getHWAddr() + "\n");					
 				}
+				
+				
+				
 			}
 		});
 		
