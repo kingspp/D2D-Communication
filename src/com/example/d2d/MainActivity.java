@@ -7,12 +7,16 @@
 package com.example.d2d;
 
 import android.support.v7.app.ActionBarActivity;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +30,18 @@ public class MainActivity extends ActionBarActivity {
 	private Button sendBtn, recBtn;
 	//Check for WiFi
 	private boolean wifiEnabled;
+	
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		    StrictMode.setThreadPolicy(policy);
+		}
 		//Assign the button
 		sendBtn = (Button) findViewById(R.id.button1);
 		recBtn =  (Button) findViewById(R.id.button2);

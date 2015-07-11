@@ -7,7 +7,14 @@
 
 package com.example.d2d;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import android.support.v7.app.ActionBarActivity;
@@ -42,15 +49,41 @@ public class Server extends ActionBarActivity {
 	TextView clientsDisp;
 	private int clientNo = 0;
 	private ProgressBar spinner;
-	private int scanSec = 90;
+	private int scanSec = 10;
 	private Button scanBtn;
-
 	WifiApControl apControl;
+	
+	//Server Controls
+	private final int SERVER_PORT = 8080;
+	private TextView tvClientMsg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_server);
+		
+		//Server COntrols
+		tvClientMsg = (TextView) findViewById(R.id.textView5);
+		
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					ServerSocket socServer = new ServerSocket(SERVER_PORT);
+					Socket socClient = null;
+					while (true) {
+						socClient = socServer.accept();
+						ServerAsyncTask serverAsyncTask = new ServerAsyncTask();
+						serverAsyncTask.execute(new Socket[] { socClient });
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		
+		
 
 		clientsDisp = (TextView) findViewById(R.id.textView4);
 		wifiApManager = new WifiApManager(this);
@@ -114,9 +147,14 @@ public class Server extends ActionBarActivity {
 		}
 		scan();
 
+		
+		//server operation
+		
+		
 		spinner.setVisibility(View.VISIBLE);
 		Status.setText("Forming Cluster . .");
 		new LongOperation().execute("");
+		
 
 	}
 
@@ -165,12 +203,15 @@ public class Server extends ActionBarActivity {
 			public void onFinishScan(final ArrayList<ClientScanResult> clients) {
 				clientsDisp.setText("");
 				clientNo = 0;
-				for (ClientScanResult clientScanResult : clients) {
+				int temp=0;
+				for (ClientScanResult clientScanResult : clients) {					
+					temp=clientNo;
 					clientsDisp.append((++clientNo) + ": ");
 					clientsDisp.append("IpAddr: "
 							+ clientScanResult.getIpAddr() + "\n");
 					clientsDisp.append("HWAddr: "
-							+ clientScanResult.getHWAddr() + "\n");
+							+ clientScanResult.getHWAddr() + "\n");			
+				
 				}
 			}
 		});
@@ -218,6 +259,41 @@ public class Server extends ActionBarActivity {
 
 			apControl.setWifiApEnabled(apControl.getWifiApConfiguration(),
 					isTurnToOn);
+		}
+	}
+	
+	/**
+	 * AsyncTask which handles the commiunication with clients
+	 */
+	class ServerAsyncTask extends AsyncTask<Socket, Void, String> {		
+		@Override
+		protected String doInBackground(Socket... params) {
+			String result = null;
+			Socket mySocket = params[0];			
+			try {
+
+				InputStream is = mySocket.getInputStream();
+				PrintWriter out = new PrintWriter(mySocket.getOutputStream(),
+						true);
+
+				out.println("Hello from server");
+
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is));
+
+				result = br.readLine();
+
+				mySocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String s) {
+
+			tvClientMsg.setText(s);
 		}
 	}
 }

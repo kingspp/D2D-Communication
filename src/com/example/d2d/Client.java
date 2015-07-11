@@ -7,8 +7,15 @@
 
 package com.example.d2d;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.BroadcastReceiver;
@@ -20,6 +27,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +58,10 @@ public class Client extends ActionBarActivity {
 		// Declare variable for WifiManager Class
 		final WifiManager wifiManager = (WifiManager) this
 				.getSystemService(Context.WIFI_SERVICE);
+		
+		
+		
+		
 		// Turn Off HotSpot
 		turnOnOffHotspot(this, false);
 
@@ -89,7 +101,12 @@ public class Client extends ActionBarActivity {
 
 		if (myNetworkInfo.isConnected()) {
 			spinner.setVisibility(View.GONE);
-			ssidName.setText("SSID: " + myWifiInfo.getSSID().toString()+"\nIP:        "+intToIP(myWifiInfo.getIpAddress()));
+			ssidName.setText("SSID: " + myWifiInfo.getSSID().toString()+"\nIP:        "+intToIP(myWifiInfo.getIpAddress())+"\nGateway: "+intToIP(myWifiManager.getDhcpInfo().gateway));
+			//Client Controls
+			ClientAsyncTask clientAST = new ClientAsyncTask();
+			clientAST.execute(new String[] {
+					intToIP(myWifiManager.getDhcpInfo().gateway), "8080",
+			"Hello from client" });
 
 		} else {
 			ssidName.setText("Scanning for Server");
@@ -157,5 +174,42 @@ public class Client extends ActionBarActivity {
 		wifiManager.disconnect();
 		wifiManager.enableNetwork(netId, true);
 		wifiManager.reconnect();
+	}
+	
+	
+	/**
+	 * AsyncTask which handles the communication with the server
+	 */
+	class ClientAsyncTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			String result = null;
+			try {
+
+				Socket socket = new Socket(params[0],
+						Integer.parseInt(params[1]));
+
+				InputStream is = socket.getInputStream();
+
+				PrintWriter out = new PrintWriter(socket.getOutputStream(),
+						true);
+
+				out.println(params[2]);
+
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(is));
+
+				result = br.readLine();
+
+				socket.close();
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
 	}
 }
